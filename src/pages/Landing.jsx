@@ -15,39 +15,29 @@ const Landing = () => {
     setSelectedRow(index);
   };
 
-  useEffect(() => {
-    axios
-      .get('../../Shipments.txt')
-      .then((response) => {
-        dispatch(setData(response.data));
-      })
-      .catch((error) => console.error(error));
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get('../../Shipments.txt')
+  //     .then((response) => {
+  //       dispatch(setData(response.data));
+  //     })
+  //     .catch((error) => console.error(error));
+  // }, []);
 
-  // const fetchData = async () => {
-  //   try {
-  //     const response = await axios.get(
-  //       'https://my.api.mockaroo.com/shipments.json?key=5e0b62d0'
-  //     );
-  //     dispatch(setData(response.data));
-  //     return;
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        'https://my.api.mockaroo.com/shipments.json?key=5e0b62d0'
+      );
+      dispatch(setData(response.data));
+      return;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          'https://my.api.mockaroo.com/shipments.json?key=5e0b62d0'
-        );
-        dispatch(setData(response.data));
-        return;
-      } catch (error) {
-        console.log(error);
-      }
-    };
+    fetchData();
   }, []);
 
   return (
