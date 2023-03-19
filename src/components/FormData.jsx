@@ -4,9 +4,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { deleteRow } from '../features/deleteSlice';
 import { toggleModal } from '../features/formSlice';
 
-const FormData = () => {
+const FormData = ({ onRowClick }) => {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.data);
+
+  const handleRowClick = (index) => {
+    onRowClick(index);
+  };
 
   return (
     <div className='form-data'>
@@ -40,7 +44,10 @@ const FormData = () => {
                     <button
                       type='button'
                       className='btn'
-                      onClick={() => dispatch(toggleModal())}
+                      onClick={() => {
+                        dispatch(toggleModal());
+                        handleRowClick(index);
+                      }}
                     >
                       <RxUpdate />
                     </button>
@@ -63,3 +70,6 @@ const FormData = () => {
   );
 };
 export default FormData;
+
+// FormData: a component that displays the shipment data in a table and allows users to edit and delete individual shipments.
+// The FormData component maps over the shipment data array to display each shipment in a table. Each row has an "Edit" button and a "Delete" button that dispatch the toggleModal action and deleteRow action, respectively, to show the Form component and delete the selected shipment from the data array.

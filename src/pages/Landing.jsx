@@ -9,6 +9,12 @@ const Landing = () => {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.data);
 
+  const [selectedRow, setSelectedRow] = useState(null);
+
+  const handleRowClick = (index) => {
+    setSelectedRow(index);
+  };
+
   useEffect(() => {
     axios
       .get('../../Shipments.txt')
@@ -18,7 +24,6 @@ const Landing = () => {
       .catch((error) => console.error(error));
   }, []);
 
-  console.log(data);
   // const fetchData = async () => {
   //   try {
   //     const response = await axios.get(
@@ -31,15 +36,27 @@ const Landing = () => {
   //   }
   // };
 
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          'https://my.api.mockaroo.com/shipments.json?key=5e0b62d0'
+        );
+        dispatch(setData(response.data));
+        return;
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  }, []);
 
   return (
     <main className='container'>
-      <Form />
-      <FormData data={data} />
+      <Form selectedRow={selectedRow} />
+      <FormData onRowClick={handleRowClick} />
     </main>
   );
 };
 export default Landing;
+
+// The top-level component that fetches the shipment data from the text file and renders Form and FormData components.

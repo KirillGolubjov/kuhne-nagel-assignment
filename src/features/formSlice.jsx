@@ -1,9 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-// const initialState = {
-//   isModalOpen: false,
-// };
-
 const formSlice = createSlice({
   name: 'modal',
   initialState: { isModalOpen: false },

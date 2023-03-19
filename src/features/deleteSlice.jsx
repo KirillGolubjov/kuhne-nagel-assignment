@@ -8,16 +8,11 @@ const deleteSlice = createSlice({
       return action.payload;
     },
     deleteRow: (state, action) => {
-      const index = action.payload;
-
-      state.splice(index, 1);
-    },
-    updateData: (state, action) => {
-      return [...state, action.payload];
+      state.splice(action.payload, 1);
     },
   },
 });
 
-export const { deleteRow, setData, updateData } = deleteSlice.actions;
+export const { deleteRow, setData } = deleteSlice.actions;
 
 export default deleteSlice.reducer;

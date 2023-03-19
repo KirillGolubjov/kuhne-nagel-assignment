@@ -1,36 +1,24 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { toggleModal } from '../features/formSlice';
 import { FaTimes } from 'react-icons/fa';
-import { setData, updateData } from '../features/deleteSlice';
+import { setData } from '../features/deleteSlice';
 import FormRow from './FormRow';
 import { useState } from 'react';
 
-const Form = () => {
+const Form = ({ selectedRow }) => {
   const { isModalOpen } = useSelector((state) => state.modal);
   const data = useSelector((state) => state.data);
   const dispatch = useDispatch();
 
-  const [newData, setNewData] = useState({
-    orderNo: data.orderNo || '',
-    date: data.date || '',
-    customer: data.customer || '',
-    trackingNo: data.trackingNo || '',
-    status: data.status || '',
-    consignee: data.consignee || '',
-  });
+  const selectedData = data[selectedRow];
 
   const handleChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
-    dispatch(updateData({ ...newData, [name]: value }));
+    setData({ ...data, [name]: value });
   };
-
   const handleUpdate = (e) => {
     e.preventDefault();
-    const { orderNo, date, customer, trackingNo, status, consignee } = newData;
-    if ((!orderNo, !date, !customer, !trackingNo, !status, !consignee))
-      return alert('please fill out');
-    dispatch(setData(data));
   };
 
   if (!isModalOpen) {
@@ -46,39 +34,39 @@ const Form = () => {
         <h3 className='title'>Shipment details</h3>
         <form className='form' onSubmit={handleUpdate}>
           <FormRow
-            type='string'
+            type='text'
             name='orderNo'
-            value={data.orderNo}
+            value={selectedData?.orderNo}
             handleChange={handleChange}
           />
           <FormRow
-            type='date'
+            type='text'
             name='date'
-            value={data.date}
+            value={selectedData?.date}
             handleChange={handleChange}
           />
           <FormRow
             type='text'
             name='customer'
-            value={data.customer}
+            value={selectedData?.customer}
             handleChange={handleChange}
           />
           <FormRow
             type='string'
             name='trackingNo'
-            value={data.trackingNo}
+            value={selectedData?.trackingNo}
             handleChange={handleChange}
           />
           <FormRow
             type='text'
             name='status'
-            value={data.status}
+            value={selectedData?.status}
             handleChange={handleChange}
           />
           <FormRow
             type='text'
             name='consignee'
-            value={data.consignee}
+            value={selectedData?.consignee}
             handleChange={handleChange}
           />
           <button
@@ -97,3 +85,5 @@ const Form = () => {
 };
 
 export default Form;
+
+// The Form component displays a form with input fields for each property of a shipment object. The input fields are pre-filled with the current values of the selected shipment object.
