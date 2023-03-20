@@ -1,13 +1,12 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Form from '../components/Form';
 import FormData from '../components/FormData';
 import { setData } from '../features/deleteSlice';
 
 const Landing = () => {
   const dispatch = useDispatch();
-  const data = useSelector((state) => state.data);
 
   const [selectedRow, setSelectedRow] = useState(null);
 

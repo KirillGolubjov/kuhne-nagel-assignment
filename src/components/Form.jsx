@@ -1,23 +1,22 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { toggleModal } from '../features/formSlice';
+import { toggleModalWindow } from '../features/formSlice';
 import { FaTimes } from 'react-icons/fa';
 import { setData } from '../features/deleteSlice';
 import FormRow from './FormRow';
-import { useState } from 'react';
 
 const Form = ({ selectedRow }) => {
-  const { isModalOpen } = useSelector((state) => state.modal);
-  const data = useSelector((state) => state.data);
+  const { isModalOpen } = useSelector((store) => store.modal);
+  const data = useSelector((store) => store.data);
   const dispatch = useDispatch();
 
   const selectedData = data[selectedRow];
 
-  const handleChange = (e) => {
+  const handleInputChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
     setData({ ...data, [name]: value });
   };
-  const handleUpdate = (e) => {
+  const handleFormUpdate = (e) => {
     e.preventDefault();
   };
 
@@ -32,46 +31,46 @@ const Form = ({ selectedRow }) => {
     >
       <div className='modal-container'>
         <h3 className='title'>Shipment details</h3>
-        <form className='form' onSubmit={handleUpdate}>
+        <form className='form' onSubmit={handleFormUpdate}>
           <FormRow
             type='text'
             name='orderNo'
             value={selectedData?.orderNo}
-            handleChange={handleChange}
+            onChange={handleInputChange}
           />
           <FormRow
             type='text'
             name='date'
             value={selectedData?.date}
-            handleChange={handleChange}
+            onChange={handleInputChange}
           />
           <FormRow
             type='text'
             name='customer'
             value={selectedData?.customer}
-            handleChange={handleChange}
+            onChange={handleInputChange}
           />
           <FormRow
             type='string'
             name='trackingNo'
             value={selectedData?.trackingNo}
-            handleChange={handleChange}
+            onChange={handleInputChange}
           />
           <FormRow
             type='text'
             name='status'
             value={selectedData?.status}
-            handleChange={handleChange}
+            onChange={handleInputChange}
           />
           <FormRow
             type='text'
             name='consignee'
             value={selectedData?.consignee}
-            handleChange={handleChange}
+            onChange={handleInputChange}
           />
           <button
             className='close-modal-btn'
-            onClick={() => dispatch(toggleModal())}
+            onClick={() => dispatch(toggleModalWindow())}
           >
             <FaTimes />
           </button>

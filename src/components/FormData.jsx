@@ -2,11 +2,11 @@ import { RiDeleteBin2Line } from 'react-icons/ri';
 import { RxUpdate } from 'react-icons/rx';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteRow } from '../features/deleteSlice';
-import { toggleModal } from '../features/formSlice';
+import { toggleModalWindow } from '../features/formSlice';
 
 const FormData = ({ onRowClick }) => {
   const dispatch = useDispatch();
-  const data = useSelector((state) => state.data);
+  const data = useSelector((store) => store.data);
 
   const handleRowClick = (index) => {
     onRowClick(index);
@@ -28,42 +28,41 @@ const FormData = ({ onRowClick }) => {
           </tr>
         </thead>
         <tbody>
-          {Array.isArray(data) &&
-            data.map((item, index) => {
-              const { orderNo, date, customer, trackingNo, status, consignee } =
-                item;
-              return (
-                <tr key={index} className='form-table-tbody'>
-                  <td>{orderNo}</td>
-                  <td>{date}</td>
-                  <td>{customer}</td>
-                  <td>{trackingNo}</td>
-                  <td>{status}</td>
-                  <td>{consignee}</td>
-                  <td>
-                    <button
-                      type='button'
-                      className='btn'
-                      onClick={() => {
-                        dispatch(toggleModal());
-                        handleRowClick(index);
-                      }}
-                    >
-                      <RxUpdate />
-                    </button>
-                  </td>
-                  <td>
-                    <button
-                      type='button'
-                      className='btn'
-                      onClick={() => dispatch(deleteRow(index))}
-                    >
-                      <RiDeleteBin2Line />
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
+          {data.map((item, index) => {
+            const { orderNo, date, customer, trackingNo, status, consignee } =
+              item;
+            return (
+              <tr key={index} className='form-table-tbody'>
+                <td>{orderNo}</td>
+                <td>{date}</td>
+                <td>{customer}</td>
+                <td>{trackingNo}</td>
+                <td>{status}</td>
+                <td>{consignee}</td>
+                <td>
+                  <button
+                    type='button'
+                    className='btn'
+                    onClick={() => {
+                      dispatch(toggleModalWindow());
+                      handleRowClick(index);
+                    }}
+                  >
+                    <RxUpdate />
+                  </button>
+                </td>
+                <td>
+                  <button
+                    type='button'
+                    className='btn'
+                    onClick={() => dispatch(deleteRow(index))}
+                  >
+                    <RiDeleteBin2Line />
+                  </button>
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>

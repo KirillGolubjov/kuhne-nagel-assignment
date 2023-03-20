@@ -4,12 +4,12 @@ const formSlice = createSlice({
   name: 'modal',
   initialState: { isModalOpen: false },
   reducers: {
-    toggleModal: (state) => {
+    toggleModalWindow: (state) => {
       state.isModalOpen = !state.isModalOpen;
     },
   },
 });
 
-export const { toggleModal } = formSlice.actions;
+export const { toggleModalWindow } = formSlice.actions;
 
 export default formSlice.reducer;
