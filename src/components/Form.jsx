@@ -36,37 +36,37 @@ const Form = ({ selectedRow }) => {
             type='text'
             name='orderNo'
             value={selectedData?.orderNo}
-            onChange={handleInputChange}
+            handleInputChange={handleInputChange}
           />
           <FormRow
             type='text'
             name='date'
             value={selectedData?.date}
-            onChange={handleInputChange}
+            handleInputChange={handleInputChange}
           />
           <FormRow
             type='text'
             name='customer'
             value={selectedData?.customer}
-            onChange={handleInputChange}
+            handleInputChange={handleInputChange}
           />
           <FormRow
             type='string'
             name='trackingNo'
             value={selectedData?.trackingNo}
-            onChange={handleInputChange}
+            handleInputChange={handleInputChange}
           />
           <FormRow
             type='text'
             name='status'
             value={selectedData?.status}
-            onChange={handleInputChange}
+            handleInputChange={handleInputChange}
           />
           <FormRow
             type='text'
             name='consignee'
             value={selectedData?.consignee}
-            onChange={handleInputChange}
+            handleInputChange={handleInputChange}
           />
           <button
             className='close-modal-btn'
