@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Form from '../components/Form';
 import FormData from '../components/FormData';
-import { setData } from '../features/deleteSlice';
+import { setData } from '../features/dataSlice';
 
 const Landing = () => {
   const dispatch = useDispatch();
