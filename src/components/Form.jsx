@@ -1,24 +1,36 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { toggleModalWindow } from '../features/formSlice';
+import { useEffect, useState } from 'react';
 import { FaTimes } from 'react-icons/fa';
-import { setData } from '../features/deleteSlice';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateData } from '../features/dataSlice';
+import { toggleModalWindow } from '../features/formSlice';
+
 import FormRow from './FormRow';
 
 const Form = ({ selectedRow }) => {
   const { isModalOpen } = useSelector((store) => store.modal);
-  const data = useSelector((store) => store.data);
+  const data = useSelector((store) => store.data.data);
   const dispatch = useDispatch();
 
-  const selectedData = data[selectedRow];
+  const [selectedData, setSelectedData] = useState(data[selectedRow]);
 
   const handleInputChange = (e) => {
+    console.log('Handling input change');
     const name = e.target.name;
     const value = e.target.value;
-    setData({ ...data, [name]: value });
+    setSelectedData({ ...selectedData, [name]: value });
   };
+
   const handleFormUpdate = (e) => {
     e.preventDefault();
+    console.log('Updating data: ', selectedData);
+    dispatch(updateData({ index: selectedRow, updatedRow: selectedData }));
+    setSelectedData(data[selectedRow]);
+    dispatch(toggleModalWindow());
   };
+
+  useEffect(() => {
+    setSelectedData(data[selectedRow]);
+  }, [selectedRow, data]);
 
   if (!isModalOpen) {
     return null;
@@ -35,37 +47,37 @@ const Form = ({ selectedRow }) => {
           <FormRow
             type='text'
             name='orderNo'
-            value={selectedData?.orderNo}
+            value={selectedData?.orderNo || ''}
             handleInputChange={handleInputChange}
           />
           <FormRow
             type='text'
             name='date'
-            value={selectedData?.date}
+            value={selectedData?.date || ''}
             handleInputChange={handleInputChange}
           />
           <FormRow
             type='text'
             name='customer'
-            value={selectedData?.customer}
+            value={selectedData?.customer || ''}
             handleInputChange={handleInputChange}
           />
           <FormRow
             type='string'
             name='trackingNo'
-            value={selectedData?.trackingNo}
+            value={selectedData?.trackingNo || ''}
             handleInputChange={handleInputChange}
           />
           <FormRow
             type='text'
             name='status'
-            value={selectedData?.status}
+            value={selectedData?.status || ''}
             handleInputChange={handleInputChange}
           />
           <FormRow
             type='text'
             name='consignee'
-            value={selectedData?.consignee}
+            value={selectedData?.consignee || ''}
             handleInputChange={handleInputChange}
           />
           <button
