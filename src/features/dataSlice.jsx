@@ -12,7 +12,7 @@ const dataSlice = createSlice({
       state.data = action.payload;
     },
     deleteRow: (state, action) => {
-      state.splice(action.payload, 1);
+      state.data.splice(action.payload, 1);
     },
     updateData: (state, action) => {
       const { index, updatedRow } = action.payload;
