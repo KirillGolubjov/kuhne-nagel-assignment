@@ -1,17 +1,16 @@
 import { useEffect, useState } from 'react';
-import { FaTimes } from 'react-icons/fa';
 import { useSelector, useDispatch } from 'react-redux';
+import { FaTimes } from 'react-icons/fa';
 import { updateData } from '../features/dataSlice';
 import { toggleModalWindow } from '../features/formSlice';
-
 import FormRow from './FormRow';
 
-const Form = ({ selectedRow }) => {
+const Form = ({ selectedRow, visibleData }) => {
   const { isModalOpen } = useSelector((store) => store.modal);
-  const data = useSelector((store) => store.data.data);
+  // const data = useSelector((store) => store.data.data);
   const dispatch = useDispatch();
 
-  const [selectedData, setSelectedData] = useState(data[selectedRow]);
+  const [selectedData, setSelectedData] = useState(visibleData[selectedRow]);
 
   const handleInputChange = (e) => {
     console.log('Handling input change');
@@ -23,14 +22,19 @@ const Form = ({ selectedRow }) => {
   const handleFormUpdate = (e) => {
     e.preventDefault();
     console.log('Updating data: ', selectedData);
-    dispatch(updateData({ index: selectedRow, updatedRow: selectedData }));
-    setSelectedData(data[selectedRow]);
+    dispatch(
+      updateData({
+        index: selectedRow,
+        updatedRow: selectedData,
+      })
+    );
+    setSelectedData(visibleData[selectedRow]);
     dispatch(toggleModalWindow());
   };
 
   useEffect(() => {
-    setSelectedData(data[selectedRow]);
-  }, [selectedRow, data]);
+    setSelectedData(visibleData[selectedRow]);
+  }, [selectedRow, visibleData]);
 
   if (!isModalOpen) {
     return null;

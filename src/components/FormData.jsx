@@ -1,12 +1,24 @@
 import { RiDeleteBin2Line } from 'react-icons/ri';
 import { RxUpdate } from 'react-icons/rx';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteRow } from '../features/dataSlice';
 import { toggleModalWindow } from '../features/formSlice';
+import { deleteRow } from '../features/dataSlice';
+import PaginationBtn from './PaginationBtn';
+import Form from './Form';
 
-const FormData = ({ onRowClick }) => {
+const FormData = ({ onRowClick, selectedRow }) => {
   const dispatch = useDispatch();
   const data = useSelector((store) => store.data.data);
+  const dataPerPage = useSelector((store) => store.data.dataPerPage);
+  const currentPage = useSelector((store) => store.data.currentPage);
+
+  const totalPages = Math.ceil(data.length / dataPerPage);
+  const pages = [...Array(totalPages + 1).keys()].slice(1);
+  const indexOfLastPage = currentPage * dataPerPage;
+  const indexOfFirstPage = indexOfLastPage - dataPerPage;
+
+  const visibleData = data.slice(indexOfFirstPage, indexOfLastPage);
+  console.log(visibleData);
 
   const handleRowClick = (index) => {
     onRowClick(index);
@@ -28,8 +40,8 @@ const FormData = ({ onRowClick }) => {
           </tr>
         </thead>
         <tbody>
-          {Array.isArray(data) &&
-            data.map((item, index) => {
+          {Array.isArray(visibleData) &&
+            visibleData.map((item, index) => {
               const { orderNo, date, customer, trackingNo, status, consignee } =
                 item;
               return (
@@ -66,6 +78,12 @@ const FormData = ({ onRowClick }) => {
             })}
         </tbody>
       </table>
+      <PaginationBtn
+        pages={pages}
+        totalPages={totalPages}
+        currentPage={currentPage}
+      />
+      <Form visibleData={visibleData} selectedRow={selectedRow} />
     </div>
   );
 };
