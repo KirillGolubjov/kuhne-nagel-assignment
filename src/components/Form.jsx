@@ -5,10 +5,12 @@ import { updateData } from '../features/dataSlice';
 import { toggleModalWindow } from '../features/formSlice';
 import FormRow from './FormRow';
 
-const Form = ({ selectedRow, visibleData }) => {
-  const { isModalOpen } = useSelector((store) => store.modal);
-  // const data = useSelector((store) => store.data.data);
+const Form = ({ visibleData }) => {
   const dispatch = useDispatch();
+  const isModalOpen = useSelector((store) => store.modal.isModalOpen);
+  const { dataPerPage, currentPage, selectedRow } = useSelector(
+    (store) => store.data
+  );
 
   const [selectedData, setSelectedData] = useState(visibleData[selectedRow]);
 
@@ -22,9 +24,10 @@ const Form = ({ selectedRow, visibleData }) => {
   const handleFormUpdate = (e) => {
     e.preventDefault();
     console.log('Updating data: ', selectedData);
+    const actualIndex = selectedRow + (currentPage - 1) * dataPerPage;
     dispatch(
       updateData({
-        index: selectedRow,
+        index: actualIndex,
         updatedRow: selectedData,
       })
     );
@@ -100,5 +103,3 @@ const Form = ({ selectedRow, visibleData }) => {
 };
 
 export default Form;
-
-// The Form component displays a form with input fields for each property of a shipment object. The input fields are pre-filled with the current values of the selected shipment object.

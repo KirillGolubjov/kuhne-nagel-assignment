@@ -2,17 +2,10 @@ import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setData } from '../features/dataSlice';
 import axios from 'axios';
-import Form from '../components/Form';
 import FormData from '../components/FormData';
 
 const Landing = () => {
   const dispatch = useDispatch();
-
-  const [selectedRow, setSelectedRow] = useState(null);
-
-  const handleRowClick = (index) => {
-    setSelectedRow(index);
-  };
 
   // useEffect(() => {
   //   axios
@@ -42,7 +35,7 @@ const Landing = () => {
   return (
     <main className='container'>
       {/* <Form selectedRow={selectedRow} /> */}
-      <FormData onRowClick={handleRowClick} selectedRow={selectedRow} />
+      <FormData />
     </main>
   );
 };

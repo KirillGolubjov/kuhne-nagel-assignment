@@ -5,6 +5,7 @@ const initialState = {
   data: [],
   dataPerPage: 10,
   currentPage: 1,
+  selectedRow: null,
 };
 
 const dataSlice = createSlice({
@@ -13,6 +14,9 @@ const dataSlice = createSlice({
   reducers: {
     setData: (state, action) => {
       state.data = action.payload;
+    },
+    setSelectedRow: (state, action) => {
+      state.selectedRow = action.payload;
     },
     onNavigateNext: (state) => {
       state.currentPage++;
@@ -39,6 +43,7 @@ const dataSlice = createSlice({
 
 export const {
   setData,
+  setSelectedRow,
   deleteRow,
   updateData,
   onNavigateNext,

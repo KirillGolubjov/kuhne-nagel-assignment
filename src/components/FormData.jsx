@@ -2,15 +2,14 @@ import { RiDeleteBin2Line } from 'react-icons/ri';
 import { RxUpdate } from 'react-icons/rx';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleModalWindow } from '../features/formSlice';
-import { deleteRow } from '../features/dataSlice';
+import { deleteRow, setSelectedRow } from '../features/dataSlice';
 import PaginationBtn from './PaginationBtn';
 import Form from './Form';
 
-const FormData = ({ onRowClick, selectedRow }) => {
+const FormData = () => {
   const dispatch = useDispatch();
-  const data = useSelector((store) => store.data.data);
-  const dataPerPage = useSelector((store) => store.data.dataPerPage);
-  const currentPage = useSelector((store) => store.data.currentPage);
+
+  const { data, dataPerPage, currentPage } = useSelector((store) => store.data);
 
   const totalPages = Math.ceil(data.length / dataPerPage);
   const pages = [...Array(totalPages + 1).keys()].slice(1);
@@ -18,10 +17,9 @@ const FormData = ({ onRowClick, selectedRow }) => {
   const indexOfFirstPage = indexOfLastPage - dataPerPage;
 
   const visibleData = data.slice(indexOfFirstPage, indexOfLastPage);
-  console.log(visibleData);
 
   const handleRowClick = (index) => {
-    onRowClick(index);
+    dispatch(setSelectedRow(index));
   };
 
   return (
@@ -83,11 +81,8 @@ const FormData = ({ onRowClick, selectedRow }) => {
         totalPages={totalPages}
         currentPage={currentPage}
       />
-      <Form visibleData={visibleData} selectedRow={selectedRow} />
+      <Form visibleData={visibleData} />
     </div>
   );
 };
 export default FormData;
-
-// FormData: a component that displays the shipment data in a table and allows users to edit and delete individual shipments.
-// The FormData component maps over the shipment data array to display each shipment in a table. Each row has an "Edit" button and a "Delete" button that dispatch the toggleModal action and deleteRow action, respectively, to show the Form component and delete the selected shipment from the data array.
