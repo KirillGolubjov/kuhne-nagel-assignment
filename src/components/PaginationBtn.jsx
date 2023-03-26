@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { HiChevronDoubleLeft, HiChevronDoubleRight } from 'react-icons/hi';
 import { useDispatch } from 'react-redux';
 import {
@@ -6,7 +7,7 @@ import {
   onClickCurrentPage,
 } from '../features/dataSlice';
 
-const PaginationBtn = ({ currentPage, totalPages, pages }) => {
+const PaginationBtn = ({ currentPage, totalPages, pages, visibleData }) => {
   const dispatch = useDispatch();
 
   const nextPage = () => {
@@ -17,13 +18,19 @@ const PaginationBtn = ({ currentPage, totalPages, pages }) => {
     if (currentPage !== 1) dispatch(onNavigatePrev());
   };
 
+  useEffect(() => {
+    if (visibleData.length === 0 && currentPage > 1) {
+      dispatch(onNavigatePrev());
+    }
+  }, [visibleData]);
+
   return (
     <section className='container-pgn'>
       <button type='button' className='prev-btn' onClick={prevPage}>
         <HiChevronDoubleLeft /> Prev
       </button>
       <div className='btn-container'>
-        {pages.map((page) => {
+        {pages.map((page, index) => {
           return (
             <button
               key={page}

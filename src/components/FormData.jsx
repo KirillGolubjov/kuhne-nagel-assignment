@@ -80,6 +80,7 @@ const FormData = () => {
         pages={pages}
         totalPages={totalPages}
         currentPage={currentPage}
+        visibleData={visibleData}
       />
       <Form visibleData={visibleData} />
     </div>
